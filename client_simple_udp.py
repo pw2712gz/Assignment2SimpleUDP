@@ -7,9 +7,11 @@ import sys
 import time
 import hashlib
 
+
 # Function to compute MD5 checksum of the given data
 def compute_checksum(data):
     return hashlib.md5(data).hexdigest()
+
 
 # Main function to send a message or file to the server
 def main(server_ip, port, data_input):
@@ -54,6 +56,7 @@ def main(server_ip, port, data_input):
     print(f"RTT: {int(rtt)}us")
 
     client_socket.close()
+
 
 # Entry point of the script
 if __name__ == "__main__":

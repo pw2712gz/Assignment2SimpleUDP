@@ -7,9 +7,11 @@ import sys
 import datetime
 import hashlib
 
+
 # Function to compute MD5 checksum of the given data
 def compute_checksum(data):
     return hashlib.md5(data).hexdigest()
+
 
 # Main function to listen for messages from clients
 def main(port):
@@ -24,19 +26,19 @@ def main(port):
         print("Waiting ...\n")
         # Receive data from a client
         data, address = server_socket.recvfrom(4096)
-        
+
         # Split the received data into checksum and message
         checksum, message = data.split(b"|", 1)
         received_checksum = checksum.decode()
         # Compute the checksum of the received message
         calculated_checksum = compute_checksum(message)
-        
+
         print("*** new message ***\n")
         print(f"Received time: {datetime.datetime.now()}")
         print(f"Received message: \n{message.decode()}")
         print(f"Received checksum: {received_checksum}")
         print(f"Calculated checksum: {calculated_checksum}\n")
-        
+
         # Compare the received checksum with the calculated checksum
         if received_checksum == calculated_checksum:
             # If they match, send back the current timestamp
@@ -45,9 +47,10 @@ def main(port):
             # If they do not match, send an error message
             response = b'0'
             print("Error: Checksum does not match\n")
-            
+
         # Send the response to the client
         server_socket.sendto(response, address)
+
 
 # Entry point of the script
 if __name__ == "__main__":
